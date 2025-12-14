@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Mi Agenda{% endblock %} | Lembradoiro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__brand">Lembradoiro</div>
+      <nav class="hero__nav">
+        {% if g.user %}
+          <span class="hero__user">👤 {{ g.user['username'] }}</span>
+          <a class="btn btn--ghost" href="{{ url_for('tasks.dashboard') }}">Tablero</a>
+          <a class="btn btn--ghost" href="{{ url_for('auth.logout') }}">Salir</a>
+        {% else %}
+          <a class="btn btn--ghost" href="{{ url_for('auth.login') }}">Entrar</a>
+          <a class="btn" href="{{ url_for('auth.register') }}">Crear cuenta</a>
+        {% endif %}
+      </nav>
+    </header>
+
+    <main class="container">
+      {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+      <p>Aplicación de ejemplo para la UD04 · Flask + SQLite · Responsive</p>
+    </footer>
+  </body>
+</html>

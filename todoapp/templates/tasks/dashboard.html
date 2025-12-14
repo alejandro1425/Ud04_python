@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Tablero{% endblock %}
+{% block content %}
+<section class="header-row">
+  <div>
+    <p class="muted">Organiza tus pendientes sin perder nada.</p>
+    <h1>Tus tareas</h1>
+  </div>
+  <div class="actions">
+    <a class="btn" href="{{ url_for('tasks.create') }}">➕ Añadir tarea</a>
+  </div>
+</section>
+
+{% if tasks %}
+  <ul class="task-grid">
+    {% for task in tasks %}
+      <li class="task {{ 'task--done' if task['completada'] }}">
+        <div class="task__header">
+          <h2>{{ task['titulo'] }}</h2>
+          <span class="badge">{{ task['creado']|humanize_date }}</span>
+        </div>
+        <p class="task__description">{{ task['descripcion'] or 'Sin descripción adicional.' }}</p>
+        <div class="task__actions">
+          <form method="post" action="{{ url_for('tasks.toggle_complete', id=task['id']) }}">
+            <button class="btn btn--ghost" type="submit">
+              {{ '⏳ Marcar pendiente' if task['completada'] else '✅ Marcar completada' }}
+            </button>
+          </form>
+          <a class="btn btn--ghost" href="{{ url_for('tasks.update', id=task['id']) }}">✏️ Editar</a>
+          <form method="post" action="{{ url_for('tasks.delete', id=task['id']) }}" onsubmit="return confirm('¿Seguro que quieres borrar esta tarea?');">
+            <button class="btn btn--ghost" type="submit">🗑️ Borrar</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <div class="empty-state">
+    <p>No hay tareas todavía. Crea la primera para empezar.</p>
+    <a class="btn" href="{{ url_for('tasks.create') }}">Crear tarea</a>
+  </div>
+{% endif %}
+{% endblock %}
