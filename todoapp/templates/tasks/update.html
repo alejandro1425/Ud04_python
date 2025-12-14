@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Editar tarea{% endblock %}
+{% block content %}
+<section class="card card--center">
+  <h1>Editar tarea</h1>
+  <p class="muted">Actualiza el título o añade detalles para no olvidar nada.</p>
+  <form method="post" class="form-grid">
+    <label>Título
+      <input name="titulo" value="{{ task['titulo'] }}" required maxlength="120" />
+    </label>
+    <label>Descripción
+      <textarea name="descripcion" rows="4">{{ task['descripcion'] }}</textarea>
+    </label>
+    <div class="form-actions">
+      <a class="btn btn--ghost" href="{{ url_for('tasks.dashboard') }}">Volver</a>
+      <button class="btn" type="submit">Actualizar</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
