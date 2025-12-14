@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Nueva tarea{% endblock %}
+{% block content %}
+<section class="card card--center">
+  <h1>Nueva tarea</h1>
+  <p class="muted">Describe lo que necesitas hacer y pulsa guardar.</p>
+  <form method="post" class="form-grid">
+    <label>Título
+      <input name="titulo" required maxlength="120" />
+    </label>
+    <label>Descripción
+      <textarea name="descripcion" rows="4" placeholder="Detalles o pasos a seguir"></textarea>
+    </label>
+    <div class="form-actions">
+      <a class="btn btn--ghost" href="{{ url_for('tasks.dashboard') }}">Cancelar</a>
+      <button class="btn" type="submit">Guardar</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
